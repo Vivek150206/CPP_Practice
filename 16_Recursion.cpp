@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include <string>
+#include "16_Recursion.h"
 
 // Add all numbers till n using recursion
 
@@ -81,6 +82,7 @@ void reverse( string s){
 
 
 // Replace occurences of Pi in the string with 3.14
+
 void replacePi(string s){
 
     if (s.size()==0){
@@ -112,11 +114,95 @@ void TowerOfHanoi(int n, char src, char dest, char helper){
 
 }
 
+// Remove duplicates from a string
+// aaabbbcccddeee -> abcde
+
+void remove_duplicates(string s){
+    // base case
+    if (s.size()==0){
+        return;
+    }
+
+    if (s[0]==s[1]){
+        remove_duplicates(s.substr(1));
+    }else{
+        cout<<s[0]<<"";
+        remove_duplicates(s.substr(1));
+    } 
+}
+
+// Move all x to the end of the string
+// axxbdxcefxhix -> abdcefhixxxxx
+
+void move_x(string s){
+    // base case
+    if (s.size()==0){
+        return;
+    }
+
+    int count=0;     // counter for x
+
+    if (s[0]=='x'){
+        count+=1;
+        move_x(s.substr(1));
+    }else{
+        cout<<s[0]<<"";
+        move_x(s.substr(1));
+    }
+
+    string str1(count,'x');
+    cout<<str1;
+}
+
+// Print all the substrings of a string
+// abc -> a, ab, abc, b, bc, c, ""
+
+void substring(string s, string ans){
+
+    // base case
+    if (s.size()==0){
+        cout<<ans<<endl;
+        return;
+    }
+
+    char ch=s[0];
+    string ros=s.substr(1);   // Rest Of String
+
+    substring(ros, ans);
+    substring(ros, ans+ch);
+}
+
+// Print all the combinations using the keypad numbers
+// 23 -> ad, ae, af, bd, be, bf, cd, ce, cf
+
+string keypadArr[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+void keypad(string s, string ans){
+
+    // base case
+    if (s.size()==0){
+        cout<<ans<<endl;
+        return;
+    }
+
+    char ch=s[0];
+    string code=keypadArr[ch-'0'];
+    string ros=s.substr(1);
+
+    for (int i=0; i<code.size(); i++){
+        keypad(ros, ans+code[i]);
+    }
+
+}
+
 int main(){
     // numberinc(10);
     // reverse("binod");
     // replacePi("pisdihjpiasnpipp");
 
-    TowerOfHanoi(3,'A','B','C');
-    
+    // TowerOfHanoi(3,'A','B','C');
+    string s="abc";
+    // remove_duplicates(s);
+    // move_x(s);
+    substring(s, "");
 }
